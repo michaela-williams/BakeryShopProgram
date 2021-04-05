@@ -75,6 +75,7 @@ namespace BakeryShop
             Console.WriteLine("7 /tTake Order");
             Console.WriteLine("8 /tFill Order");
             Console.WriteLine("9 /tExit");
+            Console.WriteLine();
         }
 
         public void Quit()
@@ -82,9 +83,9 @@ namespace BakeryShop
             Console.WriteLine("Are you sure you want to quit? (Y/N)");
             string input = Console.ReadLine();
 
-            input = input.Trim().ToUpper();
+            input = input.Trim().ToLower();
 
-            if (input.Equals("Y"))
+            if (input.Equals("y"))
             {
                 Running = false;
             }
