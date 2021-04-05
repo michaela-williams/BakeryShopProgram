@@ -31,6 +31,7 @@
     <Compile Include="Recipe.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="BakeryInventory.cs" />
+    <Compile Include="UserInterface.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
