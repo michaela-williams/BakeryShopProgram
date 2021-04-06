@@ -17,51 +17,19 @@ namespace BakeryShop
                 userInterface.DisplayMenu();
                 string input = Console.ReadLine();
                 input = input.Trim();
+                userInterface.MakeSelection(input);
+                //Console.ReadLine();
 
-                switch (input)
-                {
-                    // View Funds
-                    case "1":
-                        break;
-
-                    //View Bakery Inventory
-                    case "2":
-                        break;
-
-                    // View Shop Inventory
-                    case "3":
-                        break;
-
-                    // Order Ingredients
-                    case "4":
-                        break;
-
-                    // Bake
-                    case "5":
-                        break;
-
-                    // View Orders
-                    case "6":
-                        break;
-
-                    // Take Order
-                    case "7":
-                        break;
-
-                    // Fill Order
-                    case "8":
-                        break;
-
-                    // Exit
-                    case "9":
-                        userInterface.Quit();
-                        break;
-
-                    // Choice Not Recognized
-                    default:
-                        break;
-                }
             }
+        }
+
+        public Program()
+        {
+            // Initialize static classes: BakeryInventory, Shop, ShopInventory
+            BakeryInventory.InitializeBakeryInventory();
+            Shop.InitializeShop();
+            ShopInventory.InitializeShopInventory();
+
         }
 
         public void DisplayMenu()
@@ -75,6 +43,79 @@ namespace BakeryShop
             Console.WriteLine("7 /tTake Order");
             Console.WriteLine("8 /tFill Order");
             Console.WriteLine("9 /tExit");
+            Console.WriteLine();
+        }
+
+        public void MakeSelection(string input)
+        {
+            switch (input)
+            {
+                // View Funds
+                case "1":
+                    ViewFunds();
+                    break;
+
+                //View Bakery Inventory
+                case "2":
+                    ViewBakeryInventory();
+                    break;
+
+                // View Shop Inventory
+                case "3":
+                    break;
+
+                // Order Ingredients
+                case "4":
+                    break;
+
+                // Bake
+                case "5":
+                    break;
+
+                // View Orders
+                case "6":
+                    break;
+
+                // Take Order
+                case "7":
+                    break;
+
+                // Fill Order
+                case "8":
+                    break;
+
+                // Exit
+                case "9":
+                    Quit();
+                    break;
+
+                // Choice Not Recognized
+                default:
+                    break;
+            }
+        }
+
+        public void ViewFunds()
+        {
+            Console.WriteLine($"Current Funds: {Shop.Funds}");
+            Console.WriteLine();
+        }
+
+        public void ViewBakeryInventory()
+        {
+            if (BakeryInventory.Stock.Count <= 0)
+            {
+                Console.WriteLine("There are no ingredients in the bakery's inventory.");
+            }
+
+            else
+            {
+                Console.WriteLine("Bakery Inventory:");
+                foreach (Ingredient ingredient in BakeryInventory.Stock.Keys)
+                {
+                    Console.WriteLine($"{ingredient.Name}:\t{BakeryInventory.Stock[ingredient]}");
+                }
+            }
             Console.WriteLine();
         }
 
