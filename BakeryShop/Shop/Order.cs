@@ -11,6 +11,8 @@ namespace BakeryShop
         public double SalesTotal { get; private set; }
 
         // Indicates when the order is complete, as indicated by user
+        // When true, OrderedItemsList exists, but OrderedItems does not
+        // When false, OrderedItemsList does not exist, but OrderedItems does
         public bool TakingOrder { get; private set; }
 
         // To store items as they are entered in by the user
@@ -27,6 +29,7 @@ namespace BakeryShop
             SalesTotal = 0;
         }
 
+        // Add (item, quantity) to OrderedItemsList and update SalesTotal
         public void AddItem(Item item, int quanitity)
         {
             OrderedItemsList.Add((item, quanitity));
