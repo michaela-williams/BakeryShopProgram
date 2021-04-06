@@ -155,7 +155,14 @@ namespace BakeryShop
 
         public void ViewOrders()
         {
+            Console.WriteLine("Orders:");
+            Utils.AddSpacing();
 
+            foreach(Order order in Shop.ActiveOrders)
+            {
+                DisplayOrder(order);
+                Utils.AddSpacing();
+            }
         }
 
         public void TakeOrder()
@@ -180,6 +187,30 @@ namespace BakeryShop
                 Running = false;
             }
 
+        }
+
+        private void DisplayOrder(Order order)
+        {
+            // Display order header
+            Console.WriteLine($"========== Order {order.OrderNumber} " +
+                $"==========");
+            Utils.AddSpacing();
+            Console.WriteLine($"Customer:\t{order.CustomerName}");
+            Utils.AddSpacing();
+
+            Console.WriteLine("Ordered Items:");
+            // Loop through items in the order
+            foreach ((Item, int) cur in order.OrderedItems)
+            {
+                var item = cur.Item1;
+                var quantity = cur.Item2;
+              
+                Console.WriteLine($"{item.Name}: ({item.Price})\tx{quantity}");
+            }
+
+            // Display Sales Total
+            Utils.AddSpacing();
+            Console.WriteLine($"Sales Total:\t{order.SalesTotal}");
         }
     }
 }
