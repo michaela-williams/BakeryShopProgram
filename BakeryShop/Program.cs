@@ -23,10 +23,9 @@ namespace BakeryShop
 
         public Program()
         {
-            // Initialize static classes: BakeryInventory, Shop, ShopInventory
-            BakeryInventory.InitializeBakeryInventory();
+            // Initialize static classes: Bakery, Shop
+            Bakery.InitializeBakery();
             Shop.InitializeShop();
-            ShopInventory.InitializeShopInventory();
 
         }
 

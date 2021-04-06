@@ -18,6 +18,8 @@ namespace BakeryShop
             KnownRecipes = new List<Recipe>();
             ActiveOrders = new List<Order>();
             CurrentOrderNumber = 1;
+
+            ShopInventory.InitializeShopInventory();
         }
 
         public static void AddOrder(Order newOrder)
