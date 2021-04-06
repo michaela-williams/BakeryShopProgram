@@ -6,6 +6,7 @@ namespace BakeryShop
     public static class Shop
     {
         public static double Funds { get; private set; }
+        public static Dictionary<Item, int> Stock { get; private set; }
         public static List<Order> ActiveOrders { get; private set; }
         public static List<Recipe> KnownRecipes { get; set; }
 
@@ -19,7 +20,7 @@ namespace BakeryShop
             ActiveOrders = new List<Order>();
             CurrentOrderNumber = 1;
 
-            ShopInventory.InitializeShopInventory();
+            Stock = new Dictionary<Item, int>();
         }
 
         public static void AddOrder(Order newOrder)
