@@ -18,8 +18,6 @@ namespace BakeryShop
                 string input = Console.ReadLine();
                 input = input.Trim();
                 userInterface.MakeSelection(input);
-                //Console.ReadLine();
-
             }
         }
 
@@ -43,7 +41,7 @@ namespace BakeryShop
             Console.WriteLine("7 /tTake Order");
             Console.WriteLine("8 /tFill Order");
             Console.WriteLine("9 /tExit");
-            Console.WriteLine();
+            Utils.AddSpacing();
         }
 
         public void MakeSelection(string input)
@@ -62,6 +60,7 @@ namespace BakeryShop
 
                 // View Shop Inventory
                 case "3":
+                    ViewShopInventory();
                     break;
 
                 // Order Ingredients
@@ -91,14 +90,24 @@ namespace BakeryShop
 
                 // Choice Not Recognized
                 default:
+                    Console.WriteLine("Choice not recognized. Please enter a number" +
+                        " from the menu.");
                     break;
+            }
+
+            // Add spacing, then pause until user presses enter key
+            // If user has quit, do not pause but exit immediately
+            if (Running)
+            {
+                Utils.AddSpacing();
+                Console.Write("Press enter to continue...");
+                Console.ReadLine();
             }
         }
 
         public void ViewFunds()
         {
             Console.WriteLine($"Current Funds: {Shop.Funds}");
-            Console.WriteLine();
         }
 
         public void ViewBakeryInventory()
@@ -116,7 +125,47 @@ namespace BakeryShop
                     Console.WriteLine($"{ingredient.Name}:\t{BakeryInventory.Stock[ingredient]}");
                 }
             }
-            Console.WriteLine();
+        }
+
+        public void ViewShopInventory()
+        {
+            if (ShopInventory.Stock.Count <= 0)
+            {
+                Console.WriteLine("There are no items in the shop's inventory.");
+            }
+            else
+            {
+                Console.WriteLine("Shop Inventory: ");
+                foreach(Item item in ShopInventory.Stock.Keys)
+                {
+                    Console.WriteLine($"{item.Name}:\t{ShopInventory.Stock[item]}");
+                }
+            }
+        }
+
+        public void OrderIngredients()
+        {
+
+        }
+
+        public void Bake()
+        {
+
+        }
+
+        public void ViewOrders()
+        {
+
+        }
+
+        public void TakeOrder()
+        {
+
+        }
+
+        public void FillOrder()
+        {
+
         }
 
         public void Quit()

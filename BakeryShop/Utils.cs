@@ -1,10 +1,14 @@
 ﻿using System;
 namespace BakeryShop
 {
-    public class Utils
+    public static class Utils
     {
-        public Utils()
+        // Not necessary and not much shorter than a plain Console.WriteLine(),
+        // but a bit simpler and makes the purpose of the function more obvious
+        public static void AddSpacing()
         {
+            Console.WriteLine();
         }
+
     }
 }
