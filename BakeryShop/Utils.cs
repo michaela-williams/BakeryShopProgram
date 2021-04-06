@@ -10,5 +10,13 @@ namespace BakeryShop
             Console.WriteLine();
         }
 
+        public static void AddSpacing(int numberLines)
+        {
+            for(int i = 0; i < numberLines; i++)
+            {
+                Console.WriteLine();
+            }    
+        }
+
     }
 }

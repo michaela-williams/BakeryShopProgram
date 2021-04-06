@@ -45,6 +45,7 @@ namespace BakeryShop
 
         public void MakeSelection(string input)
         {
+            Utils.AddSpacing(3);
             switch (input)
             {
                 // View Funds
@@ -111,7 +112,7 @@ namespace BakeryShop
 
         public void ViewBakeryInventory()
         {
-            if (BakeryInventory.Stock.Count <= 0)
+            if (Bakery.Stock.Count <= 0)
             {
                 Console.WriteLine("There are no ingredients in the bakery's inventory.");
             }
@@ -119,25 +120,26 @@ namespace BakeryShop
             else
             {
                 Console.WriteLine("Bakery Inventory:");
-                foreach (Ingredient ingredient in BakeryInventory.Stock.Keys)
+                Utils.AddSpacing();
+                foreach (Ingredient ingredient in Bakery.Stock.Keys)
                 {
-                    Console.WriteLine($"{ingredient.Name}:\t{BakeryInventory.Stock[ingredient]}");
+                    Console.WriteLine($"{ingredient.Name}: {Bakery.Stock[ingredient]}");
                 }
             }
         }
 
         public void ViewShopInventory()
         {
-            if (ShopInventory.Stock.Count <= 0)
+            if (Shop.Stock.Count <= 0)
             {
                 Console.WriteLine("There are no items in the shop's inventory.");
             }
             else
             {
                 Console.WriteLine("Shop Inventory: ");
-                foreach(Item item in ShopInventory.Stock.Keys)
+                foreach(Item item in Shop.Stock.Keys)
                 {
-                    Console.WriteLine($"{item.Name}:\t{ShopInventory.Stock[item]}");
+                    Console.WriteLine($"{item.Name}:\t{Shop.Stock[item]}");
                 }
             }
         }
