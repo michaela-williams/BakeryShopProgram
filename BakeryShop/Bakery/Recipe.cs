@@ -22,7 +22,7 @@ namespace BakeryShop
             {
                 string ingredientName = ingredients[i].Item1;
                 float amount = ingredients[i].Item2;
-                Ingredient ingredient = Bakery.KnownIngredients[ingredientName];
+                Ingredient ingredient = Bakery.KnownIngredients[ingredientName.ToLower()];
                 Ingredients[i] = (ingredient, amount);
             }
         }
@@ -40,8 +40,10 @@ namespace BakeryShop
                 return false;
             }
 
-            // Remove recipe ingredients from BakeryInventory
+            // Remove recipe ingredients from Bakery.Stock
+            // Add new item to Shop.Stock
             Bakery.UseIngredients(Ingredients);
+            Shop.AddItemToStock(Shop.KnownItems[Name.ToLower()]);
 
             return true;
         }

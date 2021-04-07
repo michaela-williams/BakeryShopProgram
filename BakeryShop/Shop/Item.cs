@@ -7,9 +7,10 @@ namespace BakeryShop
         public double Price { get; private set; }
         public Recipe ItemRecipe { get; private set; }
 
-        public Item(string name)
+        public Item(string name, Recipe recipe)
         {
             this.Name = name;
+            this.ItemRecipe = recipe;
             CalculatePrice();
         }
 

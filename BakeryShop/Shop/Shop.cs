@@ -8,24 +8,44 @@ namespace BakeryShop
         public static double Funds { get; private set; }
         public static Dictionary<Item, int> Stock { get; private set; }
         public static List<Order> ActiveOrders { get; private set; }
-        public static List<Recipe> KnownRecipes { get; set; }
+        public static Dictionary<string, Item> KnownItems { get; private set; }
 
         private static long CurrentOrderNumber;
         private const double StartingFunds = 50;
 
         public static void InitializeShop()
         {
+            
             Funds = StartingFunds;
-            KnownRecipes = new List<Recipe>();
             ActiveOrders = new List<Order>();
             CurrentOrderNumber = 1;
 
+            Bakery.InitializeBakery();
+            InitializeStockAndItems();
+        }
+
+        private static void InitializeStockAndItems()
+        {
             Stock = new Dictionary<Item, int>();
+            KnownItems = new Dictionary<string, Item>();
+
+            foreach (Recipe recipe in Bakery.KnownRecipes.Values)
+            {
+                Item item = new Item(recipe.Name, recipe);
+                KnownItems[recipe.Name.ToLower()] = item;
+                Stock[item] = 0;
+            }
         }
 
         public static void SpendMoney (double amount)
         {
             Shop.Funds -= amount;
+        }
+
+        // Increments amount of item in Stock by one
+        public static void AddItemToStock(Item item)
+        {
+            Stock[item]++;
         }
 
         public static void AddOrder(Order newOrder)

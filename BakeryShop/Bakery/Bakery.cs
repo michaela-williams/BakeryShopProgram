@@ -25,13 +25,6 @@ namespace BakeryShop
             ("Cocoa Powder", 5.00f)
         };
 
-        private static (string, (string, float)[])[] StartingRecipes =
-        {
-            ("White Cake", WhiteCakeRecipe),
-            ("Sugar Cookies", SugarCookieRecipe),
-            ("Chocolate Cake", ChocolateCakeRecipe)
-        };
-
         private static (string, float)[] WhiteCakeRecipe =
         {
             ("Flour", 0.1f),
@@ -64,10 +57,18 @@ namespace BakeryShop
             ("Baking Powder", 0.03f),
             ("Cocoa Powder", 0.15f)
         };
-        
+
+        private static (string, (string, float)[])[] StartingRecipes =
+        {
+            ("White Cake", WhiteCakeRecipe),
+            ("Sugar Cookies", SugarCookieRecipe),
+            ("Chocolate Cake", ChocolateCakeRecipe)
+        };
+
         public static void InitializeBakery()
         {
             InitializeIngredientsAndStock();
+            InitializeRecipes();
         }
 
         // Add starting ingredients
@@ -92,13 +93,15 @@ namespace BakeryShop
 
         private static void InitializeRecipes()
         {
+            KnownRecipes = new Dictionary<string, Recipe>();
+
             string name;
             (string, float)[] ingredients;
             foreach ((string, (string, float)[]) nameRecipe in StartingRecipes)
             {
                 name = nameRecipe.Item1;
                 ingredients = nameRecipe.Item2;
-                KnownRecipes[name] = new Recipe(name, ingredients);
+                KnownRecipes[name.ToLower()] = new Recipe(name, ingredients);
             }
         }
 

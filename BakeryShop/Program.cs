@@ -23,8 +23,8 @@ namespace BakeryShop
 
         public Program()
         {
-            // Initialize static classes: Bakery, Shop
-            Bakery.InitializeBakery();
+            // Initialize static class Shop.
+            // Static class Bakery is initialized in Shop.InitializeShop()
             Shop.InitializeShop();
         }
 
@@ -69,6 +69,7 @@ namespace BakeryShop
 
                 // Bake
                 case "5":
+                    Bake();
                     break;
 
                 // View Orders
@@ -192,7 +193,54 @@ namespace BakeryShop
 
         public void Bake()
         {
+            // Header
+            Console.WriteLine("========== Bake ==========");
+            Utils.AddSpacing(2);
 
+            // Continue baking until user exits
+            string input;
+            bool baking = true;
+            Recipe recipe;
+
+            while (baking)
+            {
+                // Header
+                Console.WriteLine("Enter \"quit\" to exit the baking menu or " +
+                   "\"available\" to see available recipes.");
+                Utils.AddSpacing();
+
+                Console.WriteLine("What recipe would you like to bake?");
+                input = Console.ReadLine().ToLower().Trim();
+                Utils.AddSpacing();
+
+                // Exit menu
+                if (input == "quit")
+                {
+                    baking = false;
+                }
+                // Print known recipes
+                else if (input == "available")
+                {
+                    foreach (string name in Bakery.KnownRecipes.Keys)
+                    {
+                        Console.WriteLine(name);
+                    }
+                }
+                else
+                {
+                    if (!Bakery.KnownRecipes.ContainsKey(input))
+                    {
+                        Console.WriteLine("Unknown Recipe.");
+                    }
+                    else
+                    {
+                        recipe = Bakery.KnownRecipes[input];
+                        recipe.Bake();
+                    }
+                }
+
+                Utils.AddSpacing();
+            }
         }
 
         public void ViewOrders()
