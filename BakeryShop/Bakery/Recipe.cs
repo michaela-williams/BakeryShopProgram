@@ -27,8 +27,6 @@ namespace BakeryShop
             }
         }
 
-        // Change this function to return an Item if successful, null otherwise
-        // =========================================================
         // Attempts to bake this recipe
         // Returns true if successful; returns false otherwise
         public bool Bake()
@@ -36,7 +34,6 @@ namespace BakeryShop
             // Verify that ingredients for recipe are available
             if (!Bakery.CheckIngredients(Ingredients))
             {
-                Console.WriteLine($"You do not have the required ingredients to bake {Name}.");
                 return false;
             }
 

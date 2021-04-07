@@ -200,7 +200,6 @@ namespace BakeryShop
             // Continue baking until user exits
             string input;
             bool baking = true;
-            Recipe recipe;
 
             while (baking)
             {
@@ -228,15 +227,7 @@ namespace BakeryShop
                 }
                 else
                 {
-                    if (!Bakery.KnownRecipes.ContainsKey(input))
-                    {
-                        Console.WriteLine("Unknown Recipe.");
-                    }
-                    else
-                    {
-                        recipe = Bakery.KnownRecipes[input];
-                        recipe.Bake();
-                    }
+                    HandleBaking(input);
                 }
 
                 Utils.AddSpacing();
@@ -347,6 +338,42 @@ namespace BakeryShop
 
                 // Order ingredients
                 Bakery.Order(ingredient, amount);
+            }
+        }
+
+        // Handles actual baking for Bake()
+        private void HandleBaking(string input)
+        {
+            Recipe recipe;
+            if (!Bakery.KnownRecipes.ContainsKey(input))
+            {
+                Console.WriteLine("Unknown Recipe.");
+            }
+            else
+            {
+                recipe = Bakery.KnownRecipes[input];
+                bool succeeded = recipe.Bake();
+                if (succeeded)
+                {
+                    Console.WriteLine($"{recipe.Name} baked.");
+                }
+                else
+                {
+                    Console.WriteLine($"You do not have the required " +
+                        $"ingredients to bake {recipe.Name}");
+                    Utils.AddSpacing();
+                    Console.WriteLine("Ingredients: ");
+
+                    foreach ((Ingredient, float) ingredientAmount in
+                        recipe.Ingredients)
+                    {
+                        Ingredient ingredient = ingredientAmount.Item1;
+                        float amount = ingredientAmount.Item2;
+
+                        Console.WriteLine($"{ingredient.Name} x {amount}");
+                    }
+                    Utils.AddSpacing();
+                }
             }
         }
     }
