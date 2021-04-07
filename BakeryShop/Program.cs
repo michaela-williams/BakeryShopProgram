@@ -65,6 +65,7 @@ namespace BakeryShop
 
                 // Order Ingredients
                 case "4":
+                    OrderIngredients();
                     break;
 
                 // Bake
@@ -107,7 +108,7 @@ namespace BakeryShop
 
         public void ViewFunds()
         {
-            Console.WriteLine($"Current Funds: {Shop.Funds}");
+            Console.WriteLine($"Current Funds: ${Shop.Funds}");
         }
 
         public void ViewBakeryInventory()
@@ -144,9 +145,78 @@ namespace BakeryShop
             }
         }
 
+        // Needs to be refactored
+        //=======================================================================
         public void OrderIngredients()
         {
+            // Header
+            Console.WriteLine("========== Order Ingredients ==========");
+            Utils.AddSpacing(2);
 
+            // Continue taking Ingredient orders until the user exits
+            bool ordering = true;
+            string input;
+            int amount;
+            while (ordering)
+            {
+                Console.WriteLine("Enter \"quit\" to exit the ordering menu or " +
+                    "\"available\" to see available ingredients.");
+                Console.WriteLine($"Current Funds: ${Shop.Funds}");
+                Utils.AddSpacing();
+
+                Console.WriteLine("What ingredient would you like to order?");
+                input = Console.ReadLine().ToLower().Trim();
+
+                if (input == "quit")
+                {
+                    ordering = false;
+                }
+                else if (input == "available")
+                {
+                    Console.WriteLine("Available Ingredients: ");
+                    foreach (string name in Bakery.KnownIngredients.Keys)
+                    {
+                        Console.WriteLine(name);
+                    }
+                }
+                else
+                {
+                    if (!Bakery.KnownIngredients.ContainsKey(input))
+                    {
+                        Console.WriteLine("Unknown Ingredient.");
+                    }
+                    else
+                    {
+                        var ingredient = Bakery.KnownIngredients[input];
+
+                        Utils.AddSpacing();
+                        Console.WriteLine($"{ingredient.Name} costs ${ingredient.Cost}.");
+                        Console.WriteLine($"Current Funds: ${Shop.Funds}");
+
+                        while (true)
+                        {
+                            
+                            Console.WriteLine("How many would you like to order?");
+                            input = Console.ReadLine().Trim();
+                            // Check if input is an int
+                            try
+                            {
+                                amount = int.Parse(input);
+                                break;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("That isn't an amount you can order. " +
+                                    "Try a whole number.");
+                            }
+                        }
+
+                        Bakery.Order(ingredient, amount);
+                        Utils.AddSpacing();
+                    }
+                }
+
+            }
         }
 
         public void Bake()

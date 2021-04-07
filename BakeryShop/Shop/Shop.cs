@@ -23,6 +23,11 @@ namespace BakeryShop
             Stock = new Dictionary<Item, int>();
         }
 
+        public static void SpendMoney (double amount)
+        {
+            Shop.Funds -= amount;
+        }
+
         public static void AddOrder(Order newOrder)
         {
             ActiveOrders.Add(newOrder);

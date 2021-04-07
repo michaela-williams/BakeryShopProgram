@@ -5,48 +5,47 @@ namespace BakeryShop
 {
     public static class Bakery
     {
+        public static Dictionary<string, Ingredient> KnownIngredients { get; private set; }
         public static Dictionary<Ingredient, float> Stock { get; private set; }
+
+        private static (string, float)[] StartingIngredients =
+        {
+            ("Baking Powder", 2.50f),
+            ("Flour", 3.50f),
+            ("Vanilla Extract", 8.00f),
+            ("Sugar", 4.00f),
+            ("Eggs", 2.00f),
+            ("Milk", 3.00f),
+            ("Baking Soda", 1.00f),
+            ("Brown Sugar", 3.00f),
+            ("Chocolate Chips", 3.00f),
+            ("Cocoa Powder", 5.00f)
+        };
+        private const float StartingStock = 5f;
 
         public static void InitializeBakery()
         {
-            InitializeStock();
-        } 
+            InitializeIngredientsAndStock();
+        }
 
         // Add starting ingredients
-        private static void InitializeStock()
+        private static void InitializeIngredientsAndStock()
         {
+            KnownIngredients = new Dictionary<string, Ingredient>();
             Stock = new Dictionary<Ingredient, float>();
 
-            Ingredient current = new Ingredient("Baking Powder", 2.50);
-            Stock[current] = 2;
+            string name;
+            float price;
+            Ingredient current;
 
-            current = new Ingredient("Flour", 3.50);
-            Stock[current] = 5;
-
-            current = new Ingredient("Vanilla Extract", 8.00);
-            Stock[current] = 2;
-
-            current = new Ingredient("Sugar", 4.00);
-            Stock[current] = 5;
-
-            current = new Ingredient("Eggs", 2.00);
-            Stock[current] = 2;
-
-            current = new Ingredient("Milk", 3.00);
-            Stock[current] = 3;
-
-            current = new Ingredient("Baking Soda", 1.00);
-            Stock[current] = 1;
-
-            current = new Ingredient("Brown Sugar", 3.00);
-            Stock[current] = 3;
-
-            current = new Ingredient("Chocolate Chips", 3.00);
-            Stock[current] = 5;
-
-            current = new Ingredient("Cocoa Powder", 5.00);
-            Stock[current] = 3;
-
+            foreach ((string, float) namePrice in StartingIngredients)
+            {
+                name = namePrice.Item1;
+                price = namePrice.Item2;
+                current = new Ingredient(name, price);
+                KnownIngredients[name.ToLower()] = current;
+                Stock[current] = StartingStock;
+            }
         }
 
         public static void Order(Ingredient ingredient, int quantity)
@@ -68,6 +67,7 @@ namespace BakeryShop
                 return;
             }
 
+            Shop.SpendMoney(cost);
             Stock[ingredient] += quantity;
         }
 
