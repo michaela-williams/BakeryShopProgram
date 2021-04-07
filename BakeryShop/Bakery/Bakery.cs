@@ -129,6 +129,7 @@ namespace BakeryShop
             Stock[ingredient] += quantity;
         }
 
+        // Check if ingredients are available in Bakery.Stock
         public static bool CheckIngredients((Ingredient, float)[] ingredients)
         {
             bool available = true;
@@ -152,6 +153,7 @@ namespace BakeryShop
             return available;
         }
 
+        // Remove ingredients from Bakery.Stock
         public static void UseIngredients((Ingredient, float)[] ingredients)
         {
             foreach ((Ingredient, float) ingredient in ingredients)
