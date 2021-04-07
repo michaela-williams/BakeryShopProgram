@@ -63,7 +63,8 @@ namespace BakeryShop
             if (Shop.Funds < cost)
             {
                 Console.WriteLine("There is not enough money available to complete the purchase.");
-                Console.WriteLine($"To order {quantity} of {ingredient.Name} you need {cost}. You have {Shop.Funds}.");
+                Console.WriteLine($"To order {quantity} of {ingredient.Name} you " +
+                    $"need {Utils.GetUSD(cost)}. You have {Utils.GetUSD(Shop.Funds)}.");
                 return;
             }
 

@@ -18,5 +18,10 @@ namespace BakeryShop
             }    
         }
 
+        public static string GetUSD(double amount)
+        {
+            return $"{string.Format("{0:c}", amount)}";
+        }
+
     }
 }

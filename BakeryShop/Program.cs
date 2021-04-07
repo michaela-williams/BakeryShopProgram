@@ -26,7 +26,6 @@ namespace BakeryShop
             // Initialize static classes: Bakery, Shop
             Bakery.InitializeBakery();
             Shop.InitializeShop();
-
         }
 
         public void DisplayMenu()
@@ -108,7 +107,7 @@ namespace BakeryShop
 
         public void ViewFunds()
         {
-            Console.WriteLine($"Current Funds: ${Shop.Funds}");
+            Console.WriteLine($"Current Funds: {Utils.GetUSD(Shop.Funds)}");
         }
 
         public void ViewBakeryInventory()
@@ -160,7 +159,7 @@ namespace BakeryShop
                 // Header
                 Console.WriteLine("Enter \"quit\" to exit the ordering menu or " +
                     "\"available\" to see available ingredients.");
-                Console.WriteLine($"Current Funds: ${Shop.Funds}");
+                Console.WriteLine($"Current Funds: {Utils.GetUSD(Shop.Funds)}");
                 Utils.AddSpacing();
 
                 Console.WriteLine("What ingredient would you like to order?");
@@ -251,12 +250,13 @@ namespace BakeryShop
                 var item = cur.Item1;
                 var quantity = cur.Item2;
 
-                Console.WriteLine($"{item.Name}: ({item.Price})\tx{quantity}");
+                Console.WriteLine($"{item.Name}: ({Utils.GetUSD(item.Price)})" +
+                    $"\tx{quantity}");
             }
 
             // Display Sales Total
             Utils.AddSpacing();
-            Console.WriteLine($"Sales Total:\t{order.SalesTotal}");
+            Console.WriteLine($"Sales Total:\t{Utils.GetUSD(order.SalesTotal)}");
         }
 
         // Handles actual ingredient ordering for OrderIngredients()
@@ -274,8 +274,9 @@ namespace BakeryShop
 
                 // Header
                 Utils.AddSpacing();
-                Console.WriteLine($"{ingredient.Name} costs ${ingredient.Cost}.");
-                Console.WriteLine($"Current Funds: ${Shop.Funds}");
+                Console.WriteLine($"{ingredient.Name} costs " +
+                    $"{Utils.GetUSD(ingredient.Cost)}.");
+                Console.WriteLine($"Current Funds: {Utils.GetUSD(Shop.Funds)}");
 
                 // Get a valid amount of ingredients to order
                 while (true)
