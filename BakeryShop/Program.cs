@@ -164,6 +164,7 @@ namespace BakeryShop
 
                 Console.WriteLine("What ingredient would you like to order?");
                 input = Console.ReadLine().ToLower().Trim();
+                Utils.AddSpacing();
 
                 // Exit menu
                 if (input == "quit")
@@ -273,7 +274,6 @@ namespace BakeryShop
                 int amount;
 
                 // Header
-                Utils.AddSpacing();
                 Console.WriteLine($"{ingredient.Name} costs " +
                     $"{Utils.GetUSD(ingredient.Cost)}.");
                 Console.WriteLine($"Current Funds: {Utils.GetUSD(Shop.Funds)}");
