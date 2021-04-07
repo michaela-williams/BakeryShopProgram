@@ -12,6 +12,20 @@ namespace BakeryShop
             this.Ingredients = ingredients;
         }
 
+        // Assumes all ingredients are valid
+        public Recipe (string name, (string, float)[] ingredients)
+        {
+            this.Name = name;
+            Ingredients = new (Ingredient, float)[ingredients.Length];
+
+            for (int i = 0; i < ingredients.Length; i++)
+            {
+                string ingredientName = ingredients[i].Item1;
+                float amount = ingredients[i].Item2;
+                Ingredient ingredient = Bakery.KnownIngredients[ingredientName];
+                Ingredients[i] = (ingredient, amount);
+            }
+        }
 
         // Change this function to return an Item if successful, null otherwise
         // =========================================================
