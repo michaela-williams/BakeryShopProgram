@@ -10,6 +10,7 @@ namespace BakeryShop
             Console.WriteLine();
         }
 
+        // Adds multiple blank lines equal to numberLines
         public static void AddSpacing(int numberLines)
         {
             for(int i = 0; i < numberLines; i++)
@@ -17,7 +18,8 @@ namespace BakeryShop
                 Console.WriteLine();
             }    
         }
-
+        
+        // Returns amount as a string, formatted as USD
         public static string GetUSD(double amount)
         {
             return $"{string.Format("{0:c}", amount)}";

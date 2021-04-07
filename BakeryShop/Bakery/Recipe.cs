@@ -12,9 +12,21 @@ namespace BakeryShop
             this.Ingredients = ingredients;
         }
 
+        // Assumes all ingredients are valid
+        public Recipe (string name, (string, float)[] ingredients)
+        {
+            this.Name = name;
+            Ingredients = new (Ingredient, float)[ingredients.Length];
 
-        // Change this function to return an Item if successful, null otherwise
-        // =========================================================
+            for (int i = 0; i < ingredients.Length; i++)
+            {
+                string ingredientName = ingredients[i].Item1;
+                float amount = ingredients[i].Item2;
+                Ingredient ingredient = Bakery.KnownIngredients[ingredientName.ToLower()];
+                Ingredients[i] = (ingredient, amount);
+            }
+        }
+
         // Attempts to bake this recipe
         // Returns true if successful; returns false otherwise
         public bool Bake()
@@ -22,12 +34,13 @@ namespace BakeryShop
             // Verify that ingredients for recipe are available
             if (!Bakery.CheckIngredients(Ingredients))
             {
-                Console.WriteLine($"You do not have the required ingredients to bake {Name}.");
                 return false;
             }
 
-            // Remove recipe ingredients from BakeryInventory
+            // Remove recipe ingredients from Bakery.Stock
+            // Add new item to Shop.Stock
             Bakery.UseIngredients(Ingredients);
+            Shop.AddItemToStock(Shop.KnownItems[Name.ToLower()]);
 
             return true;
         }
