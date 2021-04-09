@@ -6,11 +6,12 @@ namespace BakeryShop
     public static class Shop
     {
         public static double Funds { get; private set; }
+        public static long CurrentOrderNumber { get; private set; }
         public static Dictionary<Item, int> Stock { get; private set; }
         public static List<Order> ActiveOrders { get; private set; }
         public static Dictionary<string, Item> KnownItems { get; private set; }
 
-        private static long CurrentOrderNumber;
+        
         private const double StartingFunds = 50;
 
         public static void InitializeShop()
@@ -84,14 +85,10 @@ namespace BakeryShop
             return false;
         }
 
-        // Return the current value of CurrentOrderNumber and increment
-        // CurrentOrderNumber by one
-        public static long GetOrderNumber()
+        // Increments CurrentOrderNumber by one
+        public static void ConfirmOrder()
         {
-            var orderNumber = CurrentOrderNumber;
             CurrentOrderNumber++;
-            return orderNumber;
-
         }
 
     }

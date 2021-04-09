@@ -78,6 +78,7 @@ namespace BakeryShop
 
                 // Take Order
                 case "7":
+                    TakeOrder();
                     break;
 
                 // Fill Order
@@ -248,7 +249,21 @@ namespace BakeryShop
 
         public void TakeOrder()
         {
+            // Header
+            Console.WriteLine("========== Take Order ==========");
+            Utils.AddSpacing();
+            Console.WriteLine($"Order Number: {Shop.CurrentOrderNumber}");
 
+            // Get customer name or cancel order 
+            string customerName = HandleCustomerName();
+            if (customerName == "cancel")
+            {
+                return;
+            }
+            Utils.AddSpacing();
+
+            // Take order
+            HandleOrderTaking(customerName);
         }
 
         public void FillOrder()
@@ -341,6 +356,8 @@ namespace BakeryShop
             }
         }
 
+        // Needs comments
+        //---------------------------------------------------
         // Handles actual baking for Bake()
         private void HandleBaking(string input)
         {
@@ -372,8 +389,151 @@ namespace BakeryShop
 
                         Console.WriteLine($"{ingredient.Name} x {amount}");
                     }
+                    
                     Utils.AddSpacing();
                 }
+            }
+        }
+
+        // Handles process of getting the customer name when taking an order
+        private string HandleCustomerName()
+        {
+            string input;
+            string verifyInput;
+
+            while (true)
+            {
+                // Get customer name
+                Console.WriteLine("Please enter the customer's name or " +
+                    "\"cancel\" to undo the order. ");
+                input = Console.ReadLine().Trim();
+
+                // Cancel
+                if (input.ToLower() == "cancel")
+                {
+                    break;
+                }
+                // Verify customer name
+                else
+                {
+                    Utils.AddSpacing();
+                    Console.WriteLine($"Customer Name: {input}");
+                    Console.WriteLine("Is this correct? (Y/N)");
+                    verifyInput = Console.ReadLine().ToLower().Trim();
+
+                    // If correct, end loop
+                    if (verifyInput == "y")
+                    {
+                        break;
+                    }
+                }
+                Utils.AddSpacing();
+            }
+
+            return input;
+        }
+
+        // Handles ordering loop for TakeOrder()
+        private void HandleOrderTaking(string customerName)
+        {
+            Order order = new Order(Shop.CurrentOrderNumber, customerName);
+
+            // Continue taking the order until the user marks it done or cancels
+            bool ordering = true;
+            string input;
+
+            while (ordering)
+            {
+                // Header
+                Console.WriteLine("Enter \"cancel\" to cancel the order, " +
+                        "\"done\" to complete the order, or \"available\" to " +
+                        "see available shop items.");
+                Utils.AddSpacing();
+
+                // Get item name
+                Console.WriteLine("Enter an item to add to the order: ");
+                input = Console.ReadLine().ToLower().Trim();
+                Utils.AddSpacing();
+
+                // Cancel order
+                if (input == "cancel")
+                {
+                    return;
+                }
+                // Mark order as complete
+                else if (input == "done")
+                {
+                    ordering = false;
+                }
+                // Display valid item names
+                else if (input == "available")
+                {
+                    Console.WriteLine("Available Items: ");
+                    foreach (string name in Shop.KnownItems.Keys)
+                    {
+                        Console.WriteLine(name);
+                    }
+                }
+                // Attempt to order item
+                else
+                {
+                    HandleOrderItem(input, order);
+                }
+                Utils.AddSpacing();
+            } // End ordering loop
+
+            // Mark order as complete and add it to the Shop's list of active
+            // orders
+            order.MarkOrderComplete();
+            Shop.ConfirmOrder();
+            Shop.AddOrder(order);
+
+            // Display completed order
+            Utils.AddSpacing();
+            DisplayOrder(order);
+        }
+
+        // Handles process of getting a single item of an order for TakeOrder()
+        private void HandleOrderItem(string input, Order order)
+        {
+            int amount;
+
+            // Check if input is a known item
+            if (!Shop.KnownItems.ContainsKey(input))
+            {
+                Console.WriteLine("Unknown Item.");
+            }
+            else
+            {
+                var item = Shop.KnownItems[input];
+
+                // Header
+                Console.WriteLine($"{item.Name} costs " +
+                    $"{Utils.GetUSD(item.Price)}.");
+
+                // Get a valid number of items to order
+                while (true)
+                {
+                    Console.WriteLine("How many would the customer " +
+                        "like to order?");
+                    input = Console.ReadLine().Trim();
+
+                    // Check if input is an int
+                    try
+                    {
+                        amount = int.Parse(input);
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("That isn't an amount that can " +
+                            "be ordered. Try a whole number.");
+                        Utils.AddSpacing();
+                    }
+                }
+
+                // Add item to order
+                order.AddItem(item, amount);
             }
         }
     }
